@@ -33,8 +33,10 @@
     color: var(--dim);
   }
   .tree {
-    white-space: pre;
     margin-top: 10px;
+  }
+  .tree-line {
+    white-space: pre;
   }
   .tree .branch {
     color: var(--dim);
@@ -54,6 +56,7 @@
   }
   .panel {
     display: none;
+    white-space: normal;
     border: 1px solid var(--line);
     padding: 16px 18px;
     margin: 6px 0 6px 24px;
@@ -90,91 +93,89 @@
 <body>
 
   <div class="header">
-    <div class="line1">Client ID:</div>
+    <div class="line1">guest@web:~$ whoami</div>
     <div><span class="prompt">&gt;</span> Golam Akhand</div>
-    <div class="line1">guest@web:</div>
+    <div class="line1">guest@web:~$ ls -la</div>
   </div>
 
   <div class="tree">
-<span class="branch">.</span>
-<span class="branch">├──</span> <a onclick="toggle('about')">about.txt</a>
-<span class="branch">├──</span> <a onclick="toggle('moto')">moto.txt</a>
-<span class="branch">├──</span> <span class="folder">interests/</span>
-<span class="branch">│   ├──</span> <a onclick="toggle('art')">art.txt</a>
-<span class="branch">│   ├──</span> <a onclick="toggle('tech')">tech.txt</a>
-<span class="branch">│   ├──</span> <a onclick="toggle('psych')">psychology.txt</a>
-<span class="branch">│   └──</span> <a onclick="toggle('photo')">photography.txt</a>
-<span class="branch">├──</span> <span class="folder">skills/</span>
-<span class="branch">│   ├──</span> <a onclick="toggle('hardware')">computer_hardware.txt</a>
-<span class="branch">│   ├──</span> <a onclick="toggle('python')">python.txt</a>
-<span class="branch">│   └──</span> <a onclick="toggle('finance')">finance.txt</a>
-<span class="branch">├──</span> <a onclick="toggle('meme')">Cool.txt</a>
-<span class="branch">└──</span> <a onclick="toggle('contact')">contact.txt</a>
-  </div>
+    <div class="tree-line"><span class="branch">.</span></div>
 
-  <div id="panel-about" class="panel">
-    <span class="close" onclick="toggle('about')">[x]</span>
-    Business/Finance major, currently diving deeper into finance
-    and marketing.<br><br>
-    Outside of school, I'm into filmmaking, audio engineering, and
-    keeping up with new AI tools as they come out.<br><br>
-    Born in March, 2005 in Bangladesh.<br>
-    Currently based in Queens, NY.
-  </div>
+    <div class="tree-line"><span class="branch">├──</span> <a onclick="toggle('about')">about.txt</a></div>
+    <div id="panel-about" class="panel">
+      <span class="close" onclick="toggle('about')">[x]</span>
+      Business/Finance major, currently diving deeper into finance
+      and marketing.<br><br>
+      Outside of school, I'm into filmmaking, audio engineering, and
+      keeping up with new AI tools as they come out.<br><br>
+      Born March 13, 2005 in Bangladesh.<br>
+      Currently based in Queens, NY.
+    </div>
 
-  <div id="panel-moto" class="panel">
-    <span class="close" onclick="toggle('moto')">[x]</span>
-    "Lower Low For Higher High."
-  </div>
+    <div class="tree-line"><span class="branch">├──</span> <a onclick="toggle('moto')">moto.txt</a></div>
+    <div id="panel-moto" class="panel">
+      <span class="close" onclick="toggle('moto')">[x]</span>
+      "Lower Low For Higher High."
+    </div>
 
-  <div id="panel-art" class="panel">
-    <span class="close" onclick="toggle('art')">[x]</span>
-    art that expresses emotion — a way of putting
-    feeling into something visible.
-  </div>
+    <div class="tree-line"><span class="branch">├──</span> <span class="folder">interests/</span></div>
 
-  <div id="panel-tech" class="panel">
-    <span class="close" onclick="toggle('tech')">[x]</span>
-    Always curious about new technology and where it's headed.
-  </div>
+    <div class="tree-line"><span class="branch">│   ├──</span> <a onclick="toggle('art')">art.txt</a></div>
+    <div id="panel-art" class="panel">
+      <span class="close" onclick="toggle('art')">[x]</span>
+      I make art that expresses emotion — a way of putting
+      feeling into something visible.
+    </div>
 
-  <div id="panel-psych" class="panel">
-    <span class="close" onclick="toggle('psych')">[x]</span>
-    Interested in psychology — understanding why people think
-    and behave the way they do.
-  </div>
+    <div class="tree-line"><span class="branch">│   ├──</span> <a onclick="toggle('tech')">tech.txt</a></div>
+    <div id="panel-tech" class="panel">
+      <span class="close" onclick="toggle('tech')">[x]</span>
+      Always curious about new technology and where it's headed.
+    </div>
 
-  <div id="panel-hardware" class="panel">
-    <span class="close" onclick="toggle('hardware')">[x]</span>
-    Proficient in computer hardware — building PCs, researching
-    parts, and troubleshooting.
-  </div>
+    <div class="tree-line"><span class="branch">│   ├──</span> <a onclick="toggle('psych')">psychology.txt</a></div>
+    <div id="panel-psych" class="panel">
+      <span class="close" onclick="toggle('psych')">[x]</span>
+      Interested in psychology — understanding why people think
+      and behave the way they do.
+    </div>
 
-  <div id="panel-python" class="panel">
-    <span class="close" onclick="toggle('python')">[x]</span>
-    Python — beginner level.
-    [Ai Coder]
-  </div>
+    <div class="tree-line"><span class="branch">│   └──</span> <a onclick="toggle('photo')">photography.txt</a></div>
+    <div id="panel-photo" class="panel">
+      <span class="close" onclick="toggle('photo')">[x]</span>
+      Passionate about photography — color grading, color engineering
+      pictures, basic Photoshop skills, and basic camera knowledge
+      for professional photography.
+    </div>
 
-  <div id="panel-photo" class="panel">
-    <span class="close" onclick="toggle('photo')">[x]</span>
-    Passionate about photography — color grading, color engineering
-    pictures, basic Photoshop skills, and basic camera knowledge
-    for professional photography.
-  </div>
+    <div class="tree-line"><span class="branch">├──</span> <span class="folder">skills/</span></div>
 
-  <div id="panel-finance" class="panel">
-    <span class="close" onclick="toggle('finance')">[x]</span>
-    Interested in finance and how money works, moves, and grows.
-  </div>
+    <div class="tree-line"><span class="branch">│   ├──</span> <a onclick="toggle('hardware')">computer_hardware.txt</a></div>
+    <div id="panel-hardware" class="panel">
+      <span class="close" onclick="toggle('hardware')">[x]</span>
+      Proficient in computer hardware — building PCs, researching
+      parts, and troubleshooting.
+    </div>
 
-  <div id="panel-meme" class="panel">
-    <span class="close" onclick="toggle('meme')">[x]</span>
-    <pre style="margin:0; font-family: inherit; color: #ff6fb3; font-size: 6px; line-height: 1;">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀
+    <div class="tree-line"><span class="branch">│   ├──</span> <a onclick="toggle('python')">python.txt</a></div>
+    <div id="panel-python" class="panel">
+      <span class="close" onclick="toggle('python')">[x]</span>
+      Python — beginner level.
+    </div>
+
+    <div class="tree-line"><span class="branch">│   └──</span> <a onclick="toggle('finance')">finance.txt</a></div>
+    <div id="panel-finance" class="panel">
+      <span class="close" onclick="toggle('finance')">[x]</span>
+      Interested in finance and how money works, moves, and grows.
+    </div>
+
+    <div class="tree-line"><span class="branch">├──</span> <a onclick="toggle('meme')">Cool.txt</a></div>
+    <div id="panel-meme" class="panel">
+      <span class="close" onclick="toggle('meme')">[x]</span>
+      <pre style="margin:0; font-family: inherit; color: #ff6fb3; font-size: 6px; line-height: 1;">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡆
@@ -183,8 +184,8 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡾⠐
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⠧⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠉⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠐⠀⠀⠀⠀⠉⠐⠢⣀⠀⠀⠀⠀⠀⠨⡃⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠳⣦⠀⠀⣰⡸⠁⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠐⠀⠀⠀⠀⠉⠐⠢⣀⠀⠀⠀⠀⠀⠨⡃⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠳⣦⠀⠀⣰⡸⠁⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⡀⡰⣷⠇⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡟⣻⡗⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣄⢺⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⠀⠀⠀⢸⣹⠋⠀⠀⠀⠀⠀
@@ -253,13 +254,15 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
-  </div>
+    </div>
 
-  <div id="panel-contact" class="panel">
-    <span class="close" onclick="toggle('contact')">[x]</span>
-    Reach me at: <a class="link" href="mailto:GmAkhand@gmail.com">GmAkhand@gmail.com</a><br>
-    Discord: G #koshkih<br>
-    Instagram: <a class="link" href="https://www.instagram.com/2ui_tara" target="_blank">@2ui_tara</a>
+    <div class="tree-line"><span class="branch">└──</span> <a onclick="toggle('contact')">contact.txt</a></div>
+    <div id="panel-contact" class="panel">
+      <span class="close" onclick="toggle('contact')">[x]</span>
+      Reach me at: <a class="link" href="mailto:GmAkhand@gmail.com">GmAkhand@gmail.com</a><br>
+      Discord: G #koshkih<br>
+      Instagram: <a class="link" href="https://www.instagram.com/2ui_tara" target="_blank">@2ui_tara</a>
+    </div>
   </div>
 
 <script>
