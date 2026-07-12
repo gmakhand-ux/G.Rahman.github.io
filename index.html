@@ -88,6 +88,31 @@
   a.link:hover {
     color: var(--accent);
   }
+
+  /* easter egg */
+  .ghost-line {
+    height: 22px;
+  }
+  .ghost {
+    color: rgba(201, 209, 201, 0.045);
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.5s ease;
+    animation: flicker 9s ease-in-out infinite;
+  }
+  .ghost:hover {
+    color: var(--accent);
+    transition: color 0.15s ease;
+  }
+  @keyframes flicker {
+    0%, 44% { opacity: 1; }
+    46% { opacity: 0.3; }
+    48% { opacity: 1; }
+    76% { opacity: 1; }
+    78% { opacity: 0.25; }
+    80% { opacity: 1; }
+    100% { opacity: 1; }
+  }
 </style>
 </head>
 <body>
@@ -99,8 +124,6 @@
   </div>
 
   <div class="tree">
-    <div class="tree-line"><span class="branch">.</span></div>
-
     <div class="tree-line"><span class="branch">├──</span> <a onclick="toggle('about')">about.txt</a></div>
     <div id="panel-about" class="panel">
       <span class="close" onclick="toggle('about')">[x]</span>
@@ -108,7 +131,7 @@
       and marketing.<br><br>
       Outside of school, I'm into filmmaking, audio engineering, and
       keeping up with new AI tools as they come out.<br><br>
-      Born March, 2005 in Bangladesh.<br>
+      Born March 13, 2005 in Bangladesh.<br>
       Currently based in Queens, NY.
     </div>
 
@@ -123,7 +146,7 @@
     <div class="tree-line"><span class="branch">│   ├──</span> <a onclick="toggle('art')">art.txt</a></div>
     <div id="panel-art" class="panel">
       <span class="close" onclick="toggle('art')">[x]</span>
-      art that expresses emotion — a way of putting
+      I make art that expresses emotion — a way of putting
       feeling into something visible.
     </div>
 
@@ -160,7 +183,7 @@
     <div class="tree-line"><span class="branch">│   ├──</span> <a onclick="toggle('python')">python.txt</a></div>
     <div id="panel-python" class="panel">
       <span class="close" onclick="toggle('python')">[x]</span>
-      Python — beginner level. [Ai Coder]
+      Python — beginner level.
     </div>
 
     <div class="tree-line"><span class="branch">│   └──</span> <a onclick="toggle('finance')">finance.txt</a></div>
@@ -262,6 +285,13 @@
       Reach me at: <a class="link" href="mailto:GmAkhand@gmail.com">GmAkhand@gmail.com</a><br>
       Discord: G #koshkih<br>
       Instagram: <a class="link" href="https://www.instagram.com/2ui_tara" target="_blank">@2ui_tara</a>
+    </div>
+
+    <div class="tree-line ghost-line"><span class="branch">    </span><span class="ghost" onclick="toggle('hobbies')" title=":)"> :)</span></div>
+    <div id="panel-hobbies" class="panel">
+      <span class="close" onclick="toggle('hobbies')">[x]</span>
+      you found it.<br><br>
+      // fill this in with whatever you don't put on the main page
     </div>
   </div>
 
