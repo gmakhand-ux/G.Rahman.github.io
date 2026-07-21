@@ -57,6 +57,12 @@ body::after{
 .icon .glyph{
   width:52px; height:52px;
   display:flex; align-items:center; justify-content:center;
+  animation:iconFloat 3.6s ease-in-out infinite;
+  animation-delay:var(--float-delay, 0s);
+}
+@keyframes iconFloat{
+  0%, 100%{ transform:translateY(0); }
+  50%{ transform:translateY(-6px); }
 }
 .icon .glyph svg{ width:100%; height:100%; }
 .icon .glyph img{
@@ -71,7 +77,7 @@ body::after{
   text-shadow:0 1px 6px rgba(0,0,0,.9);
 }
 .icon.selected .label{ background:var(--brick); color:var(--paper); }
-.icon:active .glyph{ transform:translateY(1px); }
+.icon:active .glyph{ animation-play-state:paused; transform:translateY(1px); }
 
 /* ============ WINDOW ============ */
 .win{
@@ -273,60 +279,60 @@ body::after{
 <body>
 
 <div id="desktop">
-  <!-- icons -->
-  <div class="icon" style="left:24px; top:24px;" data-win="work">
-    <div class="glyph"><img src="pictures/work.png" alt="work"></div>
-    <div class="label">work</div>
+  <!-- icons, scattered -->
+  <div class="icon" style="left:6%; top:9%; transform:rotate(-4deg); --float-delay:0s;" data-win="pictures">
+    <div class="glyph"><img src="pictures/work.png" alt="pictures"></div>
+    <div class="label">pictures</div>
   </div>
 
-  <div class="icon" style="left:24px; top:112px;" data-win="about">
+  <div class="icon" style="left:36%; top:6%; transform:rotate(3deg); --float-delay:.4s;" data-win="about">
     <div class="glyph"><img src="pictures/about.png" alt="about"></div>
     <div class="label">about</div>
   </div>
 
-  <div class="icon" style="left:24px; top:200px;" data-win="moto">
+  <div class="icon" style="left:66%; top:12%; transform:rotate(-2deg); --float-delay:1.1s;" data-win="moto">
     <div class="glyph"><img src="pictures/moto.png" alt="moto.txt"></div>
     <div class="label">moto.txt</div>
   </div>
 
-  <div class="icon" style="left:24px; top:288px;" data-win="interests">
+  <div class="icon" style="left:10%; top:42%; transform:rotate(5deg); --float-delay:.7s;" data-win="interests">
     <div class="glyph"><img src="pictures/interests.png" alt="interests"></div>
     <div class="label">interests/</div>
   </div>
 
-  <div class="icon" style="left:24px; top:376px;" data-win="skills">
+  <div class="icon" style="left:46%; top:56%; transform:rotate(-5deg); --float-delay:1.6s;" data-win="skills">
     <div class="glyph"><img src="pictures/skills.png" alt="skills"></div>
     <div class="label">skills/</div>
   </div>
 
-  <div class="icon" style="left:24px; top:464px;" data-win="cool">
+  <div class="icon" style="left:78%; top:44%; transform:rotate(4deg); --float-delay:.2s;" data-win="cool">
     <div class="glyph"><img src="pictures/cool.png" alt="Cool.txt"></div>
     <div class="label">Cool.txt</div>
   </div>
 
-  <div class="icon" style="left:24px; top:552px;" data-win="contact">
+  <div class="icon" style="left:20%; top:74%; transform:rotate(-3deg); --float-delay:1.9s;" data-win="contact">
     <div class="glyph"><img src="pictures/contact.png" alt="contact"></div>
     <div class="label">contact</div>
   </div>
 
-  <div class="icon" style="left:24px; top:640px;" data-win="readme">
+  <div class="icon" style="left:58%; top:78%; transform:rotate(2deg); --float-delay:.9s;" data-win="readme">
     <div class="glyph"><img src="pictures/readme.png" alt="read_me.txt"></div>
     <div class="label">read_me.txt</div>
   </div>
 
-  <div class="icon" style="right:28px; bottom:64px;" data-win="trash">
+  <div class="icon" style="right:8%; bottom:14%; transform:rotate(-3deg); --float-delay:1.3s;" data-win="trash">
     <div class="glyph"><img src="pictures/trash.png" alt="trash"></div>
     <div class="label">trash</div>
   </div>
 
   <!-- windows -->
-  <div class="win" id="win-work" style="left:120px; top:60px; width:380px;">
+  <div class="win" id="win-pictures" style="left:120px; top:60px; width:380px;">
     <div class="win-bar" data-drag>
-      <span class="win-title"><span class="dot"></span>work/</span>
+      <span class="win-title"><span class="dot"></span>pictures/</span>
       <span class="win-btns"><button data-min>_</button><button data-close>×</button></span>
     </div>
     <div class="win-body">
-      <h3>work</h3>
+      <h3>pictures</h3>
       <div class="work-grid">
         <div class="wthumb" data-full="pictures/helmet.jpg" data-cap="armor study — red"><img src="pictures/helmet.jpg" alt="Red helmet armor study"></div>
         <div class="wthumb" data-full="pictures/bebop-still.jpg" data-cap="still — night drive"><img src="pictures/bebop-still.jpg" alt="Night drive still"></div>
@@ -561,8 +567,8 @@ body::after{
       <span class="win-btns"><button data-min>_</button><button data-close>×</button></span>
     </div>
     <div class="win-body">
-      <p>about, interests/, skills/, and contact are filled in now — work/ keeps growing as new pieces come in.</p>
-      <p>drag me around. double-click a folder to open it, click a file inside to read it, click a piece in work/ to view it full size. everything remembers nothing — refresh and it resets, just like the old lab computers.</p>
+      <p>about, interests/, skills/, and contact are filled in now — pictures/ keeps growing as new pieces come in.</p>
+      <p>drag me around. double-click a folder to open it, click a file inside to read it, click a piece in pictures/ to view it full size. everything remembers nothing — refresh and it resets, just like the old lab computers.</p>
       <div class="stamp">rev. 0.2</div>
     </div>
   </div>
@@ -607,7 +613,7 @@ body::after{
   </div>
   <a href="mailto:GmAkhand@gmail.com">email</a>
   <a href="https://www.instagram.com/2ui_tara" target="_blank">instagram</a>
-  <div class="mi" data-win="work">work/</div>
+  <div class="mi" data-win="pictures">pictures/</div>
   <div class="mi" data-win="about">about.txt</div>
   <div class="mi" data-win="interests">interests/</div>
   <div class="mi" data-win="skills">skills/</div>
@@ -724,6 +730,7 @@ function makeDraggable(el, handle, container){
   handle = handle || el;
   let ox=0, oy=0, dragging=false;
   handle.addEventListener('pointerdown', (e)=>{
+    if(e.target.closest('button')) return; // let win-btns (close/min) handle their own clicks
     dragging = true;
     handle.setPointerCapture(e.pointerId);
     const rect = el.getBoundingClientRect();
