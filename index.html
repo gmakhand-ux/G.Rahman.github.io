@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>golam.akhand</title>
+<title>golam.akhand — desktop</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
@@ -15,119 +15,135 @@
   --faint:   #4a453e;
   --brick:   #b8462c;
   --line:    #2a2621;
+  --win:     #171512;
 }
-*{box-sizing:border-box; margin:0; padding:0;}
-html,body{ background:var(--bg); color:var(--paper); }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ background:var(--bg); color:var(--paper); height:100%; overscroll-behavior:none; }
 body{
   font-family:'JetBrains Mono', monospace;
-  overflow-x:hidden;
-  min-height:100vh;
+  overflow:hidden;
   position:relative;
+  user-select:none;
 }
-a{ color:inherit; text-decoration:none; }
+a{ color:inherit; }
+::selection{ background:var(--brick); color:var(--paper); }
 
-/* film-grain texture */
+/* grain */
 body::before{
-  content:"";
-  position:fixed; inset:0; z-index:1; pointer-events:none;
+  content:""; position:fixed; inset:0; z-index:1; pointer-events:none;
   opacity:.05; mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+/* faint scanlines, cybercafe CRT nod */
+body::after{
+  content:""; position:fixed; inset:0; z-index:2; pointer-events:none;
+  opacity:.06;
+  background:repeating-linear-gradient(to bottom, transparent 0 2px, #000 2px 3px);
+}
 
-/* ============ HEADER ============ */
-header{
-  position:relative; z-index:5;
-  display:flex; justify-content:space-between; align-items:flex-start;
-  padding:34px 44px 0;
+/* ============ DESKTOP ============ */
+#desktop{
+  position:relative; width:100%; height:100vh; z-index:3;
 }
-.brand{
-  font-family:'Anton', sans-serif;
-  font-size:22px; letter-spacing:.02em;
-  text-transform:lowercase;
-  display:flex; align-items:baseline; gap:2px;
-}
-.brand .cursor-blink{
-  color:var(--brick); animation:blink 1.1s step-end infinite;
-}
-@keyframes blink{ 50%{ opacity:0; } }
 
-nav.top{
-  display:flex; gap:56px; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+.icon{
+  position:absolute;
+  width:88px;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  padding:8px 4px;
+  cursor:default;
+  touch-action:none;
 }
-nav.top .col{ display:flex; flex-direction:column; gap:6px; }
-nav.top .col .head{ color:var(--dim); margin-bottom:2px; }
-nav.top .col a:hover{ color:var(--brick); }
+.icon .glyph{
+  width:52px; height:52px;
+  display:flex; align-items:center; justify-content:center;
+}
+.icon .glyph svg{ width:100%; height:100%; }
+.icon .glyph img{
+  width:40px; height:40px;
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
+}
+.icon .label{
+  font-size:10.5px; letter-spacing:.06em; text-align:center;
+  color:var(--paper);
+  padding:2px 5px;
+  text-shadow:0 1px 6px rgba(0,0,0,.9);
+}
+.icon.selected .label{ background:var(--brick); color:var(--paper); }
+.icon:active .glyph{ transform:translateY(1px); }
 
-/* ============ EYE ============ */
-.eye-wrap{
-  position:relative; z-index:5;
-  display:flex; justify-content:center;
-  margin:30px 0 8px;
-}
-.eye{ width:64px; height:40px; }
-.eye .lid{ fill:none; stroke:var(--paper); stroke-width:1.4; opacity:.85; }
-.eye .lash{ stroke:var(--paper); stroke-width:1.2; opacity:.6; }
-.eye .pupil{ fill:var(--brick); }
-.eye .pupil-core{ fill:var(--bg); }
-
-/* ============ GALLERY ============ */
-.gallery{
-  position:relative; z-index:4;
-  max-width:1500px; margin:0 auto;
-  padding:10px 34px 90px;
-  display:grid;
-  grid-template-columns:repeat(12, 1fr);
-  grid-auto-rows:10px;
-  gap:14px;
-}
-.tile{
-  position:relative;
-  overflow:hidden;
+/* ============ WINDOW ============ */
+.win{
+  position:absolute;
+  min-width:280px;
+  max-width:92vw;
+  background:var(--win);
   border:1px solid var(--line);
+  box-shadow:0 24px 60px rgba(0,0,0,.55);
+  z-index:10;
+  display:none;
+  flex-direction:column;
+}
+.win.open{ display:flex; }
+.win-bar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 10px;
   background:var(--bg-2);
+  border-bottom:1px solid var(--line);
+  cursor:grab;
+  font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim);
+}
+.win-bar:active{ cursor:grabbing; }
+.win-bar .win-title{ display:flex; align-items:center; gap:8px; color:var(--paper); }
+.win-bar .win-title .dot{ width:6px; height:6px; border-radius:50%; background:var(--brick); }
+.win-bar .win-btns{ display:flex; gap:6px; }
+.win-btns button{
+  width:16px; height:16px;
+  border:1px solid var(--line);
+  background:transparent; color:var(--dim);
+  font-size:9px; line-height:1;
   cursor:pointer;
 }
-.tile img{
+.win-btns button:hover{ border-color:var(--brick); color:var(--brick); }
+.win-body{
+  padding:20px 22px 24px;
+  font-size:12px; line-height:1.7; color:var(--paper);
+  max-height:60vh; overflow:auto;
+}
+.win-body h3{
+  font-family:'Anton', sans-serif; font-weight:400;
+  font-size:20px; text-transform:lowercase; letter-spacing:.02em;
+  margin-bottom:12px; color:var(--paper);
+}
+.win-body p{ margin-bottom:10px; color:var(--dim); }
+.win-body .stamp{
+  margin-top:16px; font-size:10px; letter-spacing:.1em; color:var(--faint);
+}
+.win-body a{ color:var(--brick); }
+.win-body a:hover{ text-decoration:underline; }
+.win-body .field{ display:flex; justify-content:space-between; gap:14px; padding:5px 0; border-bottom:1px solid var(--line); font-size:11px; }
+.win-body .field span:first-child{ color:var(--dim); text-transform:uppercase; letter-spacing:.08em; font-size:10px; }
+
+.work-grid{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:7px;
+  margin-top:6px;
+}
+.wthumb{
+  position:relative; aspect-ratio:1/1; overflow:hidden;
+  border:1px solid var(--line); background:var(--bg); cursor:pointer;
+}
+.wthumb img{
   width:100%; height:100%; object-fit:cover; display:block;
-  filter:grayscale(.15) contrast(1.04);
-  transition:transform .5s cubic-bezier(.2,.7,.2,1), filter .4s;
+  filter:grayscale(.1) contrast(1.05);
+  transition:transform .35s ease, filter .3s;
 }
-.tile:hover img{ transform:scale(1.045); filter:grayscale(0) contrast(1.08); }
-.tile.contain img{ object-fit:contain; padding:20px; background:var(--bg); }
-.tile.paper{ background:var(--paper); }
-.tile.paper img{ mix-blend-mode:multiply; }
-.tile .tag{
-  position:absolute; left:10px; bottom:10px;
-  font-size:10px; letter-spacing:.14em; color:var(--paper);
-  opacity:0; transform:translateY(6px);
-  transition:opacity .3s, transform .3s;
-  text-shadow:0 2px 10px rgba(0,0,0,.8);
-}
-.tile:hover .tag{ opacity:1; transform:translateY(0); }
-.tile .idx{
-  position:absolute; right:10px; top:8px;
-  font-size:10px; color:var(--dim); letter-spacing:.08em;
-}
+.wthumb.contain img{ object-fit:contain; padding:10px; }
+.wthumb:hover img{ transform:scale(1.07); filter:grayscale(0) contrast(1.08); }
 
-/* grid placement — asymmetric, echoing a scattered studio-wall hang */
-#t-helmet   { grid-column: 1 / 5;   grid-row: 1 / 51; }
-#t-bebop    { grid-column: 5 / 9;   grid-row: 1 / 31; }
-#t-scribble { grid-column: 9 / 13;  grid-row: 1 / 19; }
-#t-pill     { grid-column: 9 / 13;  grid-row: 21 / 40; }
-#t-magpie   { grid-column: 1 / 5;   grid-row: 58 / 111; }
-#t-stamp    { grid-column: 5 / 9;   grid-row: 33 / 78; }
-#t-ali      { grid-column: 9 / 13;  grid-row: 42 / 111; }
-
-@media(max-width:860px){
-  .gallery{ grid-template-columns:repeat(2,1fr); grid-auto-rows:auto; }
-  .tile{ grid-column:auto !important; grid-row:auto !important; aspect-ratio:3/4; }
-  #t-helmet{ grid-column:1/3 !important; aspect-ratio:16/10; }
-  #t-magpie{ grid-column:1/3 !important; aspect-ratio:16/10; }
-}
-
-/* ============ LIGHTBOX ============ */
+/* lightbox for work pieces */
 .lightbox{
-  position:fixed; inset:0; z-index:50;
+  position:fixed; inset:0; z-index:80;
   background:rgba(6,5,4,.94);
   display:flex; align-items:center; justify-content:center;
   opacity:0; visibility:hidden; transition:opacity .25s;
@@ -144,137 +160,383 @@ nav.top .col a:hover{ color:var(--brick); }
   position:absolute; bottom:28px; left:34px; font-size:10px; letter-spacing:.1em; color:var(--dim);
 }
 
-/* ============ FOOTER ============ */
-footer{
-  position:relative; z-index:4;
-  padding:20px 44px 34px;
-  font-size:10px; color:var(--faint); letter-spacing:.05em;
-  display:flex; justify-content:space-between;
+/* notice popup, the cybercafe-style system interruption */
+.notice{
+  position:fixed; z-index:40;
+  top:18%; left:50%; transform:translateX(-50%);
+  width:min(340px, 84vw);
+  background:var(--win);
+  border:1px solid var(--brick);
+  box-shadow:0 30px 70px rgba(0,0,0,.6);
+  display:none;
 }
-footer a:hover{ color:var(--brick); }
+.notice.open{ display:block; }
+.notice .win-bar{ border-bottom-color:var(--brick); }
+.notice .win-body{ font-size:11.5px; }
+.notice .win-body .ok{
+  margin-top:16px; display:inline-block;
+  border:1px solid var(--paper); padding:5px 16px;
+  font-size:10px; letter-spacing:.1em; text-transform:uppercase; cursor:pointer;
+}
+.notice .win-body .ok:hover{ border-color:var(--brick); color:var(--brick); }
 
-/* custom cursor dot */
-.cursor-dot{
-  position:fixed; z-index:60; width:6px; height:6px; border-radius:50%;
-  background:var(--brick); pointer-events:none;
-  transform:translate(-50%,-50%);
-  transition:transform .12s ease;
-  mix-blend-mode:difference;
+/* ============ TASKBAR ============ */
+#taskbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:30;
+  height:38px;
+  background:var(--bg-2);
+  border-top:1px solid var(--line);
+  display:flex; align-items:center;
+  padding:0 10px;
+  gap:10px;
+}
+#startBtn{
+  font-family:'Anton', sans-serif; font-weight:400;
+  font-size:13px; letter-spacing:.02em; text-transform:lowercase;
+  display:flex; align-items:center; gap:8px;
+  padding:6px 12px;
+  border:1px solid var(--line);
+  cursor:pointer;
+  background:transparent; color:var(--paper);
+}
+#startBtn:hover{ border-color:var(--brick); }
+#startBtn .eye{ width:16px; height:10px; }
+#startBtn .eye .lid{ fill:none; stroke:var(--paper); stroke-width:1.6; }
+#startBtn .eye .pupil{ fill:var(--brick); }
+
+#taskWindows{ display:flex; gap:6px; flex:1; overflow:hidden; }
+.task-chip{
+  font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+  padding:6px 10px; border:1px solid var(--line); color:var(--dim);
+  cursor:pointer; white-space:nowrap;
+}
+.task-chip.active{ color:var(--paper); border-color:var(--faint); background:var(--bg); }
+.task-chip:hover{ color:var(--paper); }
+
+#clock{ font-size:11px; color:var(--dim); letter-spacing:.06em; white-space:nowrap; }
+
+/* start menu */
+#startMenu{
+  position:fixed; z-index:35; left:10px; bottom:44px;
+  width:190px;
+  background:var(--win); border:1px solid var(--line);
+  box-shadow:0 24px 50px rgba(0,0,0,.55);
+  display:none; flex-direction:column;
+  font-size:11px;
+}
+#startMenu.open{ display:flex; }
+#startMenu .profile{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  background:var(--bg-2);
+}
+#startMenu .profile .pic{
+  width:42px; height:42px; flex:none;
+  overflow:hidden;
+  border:1px solid var(--faint);
+  filter:saturate(1.1) contrast(1.05);
+}
+#startMenu .profile .pic img{ width:100%; height:100%; object-fit:cover; display:block; }
+#startMenu .profile .who{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+#startMenu .profile .who .name{ font-size:11px; color:var(--paper); letter-spacing:.04em; }
+#startMenu .profile .who .status{ font-size:9px; color:var(--dim); letter-spacing:.08em; text-transform:uppercase; }
+#startMenu a, #startMenu .mi{
+  padding:10px 14px; color:var(--paper);
+  border-bottom:1px solid var(--line);
+  letter-spacing:.04em;
+}
+#startMenu a:last-child, #startMenu .mi:last-child{ border-bottom:none; }
+#startMenu a:hover, #startMenu .mi:hover{ background:var(--bg-2); color:var(--brick); cursor:pointer; }
+
+@media(max-width:640px){
+  .icon{ width:74px; }
+  .icon .glyph{ width:44px; height:44px; }
+  .win{ min-width:88vw; }
 }
 </style>
 </head>
 <body>
 
-<div class="cursor-dot" id="cursorDot"></div>
+<div id="desktop">
+  <!-- icons -->
+  <div class="icon" style="left:24px; top:30px;" data-win="work">
+    <div class="glyph"><img src="work.png" alt="work"></div>
+    <div class="label">work</div>
+  </div>
 
-<header>
-  <div class="brand">golam akhand<span class="cursor-blink">_</span></div>
-  <nav class="top">
-    <div class="col">
-      <span class="head">index</span>
-      <a href="#gallery">work</a>
-    </div>
-    <div class="col">
-      <span class="head">contact</span>
-      <a href="mailto:GmAkhand@gmail.com">email</a>
-      <a href="https://www.instagram.com/2ui_tara" target="_blank">instagram</a>
-      <span>discord — G #koshkih</span>
-    </div>
-  </nav>
-</header>
+  <div class="icon" style="left:24px; top:140px;" data-win="about">
+    <div class="glyph"><img src="about.png" alt="about"></div>
+    <div class="label">about</div>
+  </div>
 
-<div class="eye-wrap">
-  <svg class="eye" viewBox="0 0 64 40" id="eyeSvg">
-    <path class="lid" d="M2,20 Q32,-4 62,20 Q32,44 2,20 Z"/>
-    <g id="pupilGroup">
-      <circle class="pupil" cx="32" cy="20" r="8"/>
-      <rect class="pupil-core" x="30" y="14" width="4" height="12"/>
-    </g>
-  </svg>
+  <div class="icon" style="left:24px; top:250px;" data-win="contact">
+    <div class="glyph"><img src="contact.png" alt="contact"></div>
+    <div class="label">contact</div>
+  </div>
+
+  <div class="icon" style="left:24px; top:360px;" data-win="readme">
+    <div class="glyph"><img src="readme.png" alt="read_me.txt"></div>
+    <div class="label">read_me.txt</div>
+  </div>
+
+  <div class="icon" style="right:28px; bottom:64px;" data-win="trash">
+    <div class="glyph"><img src="trash.png" alt="trash"></div>
+    <div class="label">trash</div>
+  </div>
+
+  <!-- windows -->
+  <div class="win" id="win-work" style="left:120px; top:60px; width:380px;">
+    <div class="win-bar" data-drag>
+      <span class="win-title"><span class="dot"></span>work/</span>
+      <span class="win-btns"><button data-min>_</button><button data-close>×</button></span>
+    </div>
+    <div class="win-body">
+      <h3>work</h3>
+      <div class="work-grid">
+        <div class="wthumb" data-full="helmet.jpg" data-cap="armor study — red"><img src="helmet.jpg" alt="Red helmet armor study"></div>
+        <div class="wthumb" data-full="bebop-still.jpg" data-cap="still — night drive"><img src="bebop-still.jpg" alt="Night drive still"></div>
+        <div class="wthumb contain" data-full="scribble.png" data-cap="sketch — red thread"><img src="scribble.png" alt="Loose ink scribble"></div>
+        <div class="wthumb contain" data-full="pill-sticker.jpg" data-cap="sticker — pill"><img src="pill-sticker.jpg" alt="Pill sticker"></div>
+        <div class="wthumb contain" data-full="magpie.png" data-cap="specimen — magpie"><img src="magpie.png" alt="Magpie cutout"></div>
+        <div class="wthumb" data-full="bangladesh-stamp.jpg" data-cap="stamp — water lily"><img src="bangladesh-stamp.jpg" alt="Bangladesh stamp"></div>
+        <div class="wthumb" data-full="ali-flag.jpg" data-cap="archive — flag"><img src="ali-flag.jpg" alt="Archive photo with flag"></div>
+      </div>
+      <div class="stamp">click a piece to view full size</div>
+    </div>
+  </div>
+
+  <div class="win" id="win-about" style="left:180px; top:120px; width:320px;">
+    <div class="win-bar" data-drag>
+      <span class="win-title"><span class="dot"></span>about.txt</span>
+      <span class="win-btns"><button data-min>_</button><button data-close>×</button></span>
+    </div>
+    <div class="win-body">
+      <h3>golam akhand</h3>
+      <p>Queens, NY. Collecting stray images, poster studies, and archive scans — this bio is still being written.</p>
+      <div class="stamp">— more soon</div>
+    </div>
+  </div>
+
+  <div class="win" id="win-contact" style="left:240px; top:180px; width:300px;">
+    <div class="win-bar" data-drag>
+      <span class="win-title"><span class="dot"></span>contact/</span>
+      <span class="win-btns"><button data-min>_</button><button data-close>×</button></span>
+    </div>
+    <div class="win-body">
+      <div class="field"><span>email</span><a href="mailto:GmAkhand@gmail.com">GmAkhand@gmail.com</a></div>
+      <div class="field"><span>instagram</span><a href="https://www.instagram.com/2ui_tara" target="_blank">@2ui_tara</a></div>
+      <div class="field"><span>discord</span><span>G #koshkih</span></div>
+    </div>
+  </div>
+
+  <div class="win" id="win-readme" style="left:300px; top:80px; width:300px;">
+    <div class="win-bar" data-drag>
+      <span class="win-title"><span class="dot"></span>read_me.txt</span>
+      <span class="win-btns"><button data-min>_</button><button data-close>×</button></span>
+    </div>
+    <div class="win-body">
+      <p>this desktop is under construction — folders are placeholders until the real work gets dragged in.</p>
+      <p>drag me around. double-click a folder to reopen it, click a piece in work/ to view it full size. everything remembers nothing — refresh and it resets, just like the old lab computers.</p>
+      <div class="stamp">rev. 0.1</div>
+    </div>
+  </div>
+
+  <div class="win" id="win-trash" style="right:60px; bottom:120px; width:260px;">
+    <div class="win-bar" data-drag>
+      <span class="win-title"><span class="dot"></span>trash</span>
+      <span class="win-btns"><button data-min>_</button><button data-close>×</button></span>
+    </div>
+    <div class="win-body">
+      <p>empty. nothing's been thrown out yet.</p>
+    </div>
+  </div>
+
+  <!-- boot notice, cybercafe-style interruption -->
+  <div class="notice" id="notice">
+    <div class="win-bar" data-drag>
+      <span class="win-title"><span class="dot"></span>system notice</span>
+      <span class="win-btns"><button data-close="notice">×</button></span>
+    </div>
+    <div class="win-body">
+      <p style="color:var(--paper);">connection established. desktop still being unpacked — some folders are empty for now.</p>
+      <span class="ok" id="noticeOk">[ ok ]</span>
+    </div>
+  </div>
+  <!-- lightbox for work thumbnails -->
+  <div class="lightbox" id="lightbox">
+    <span class="lb-close" id="lbClose">[ close ]</span>
+    <img id="lbImg" src="" alt="">
+    <span class="lb-cap" id="lbCap"></span>
+  </div>
+
 </div>
 
-<main class="gallery" id="gallery">
-  <div class="tile" id="t-helmet" data-full="helmet.jpg" data-cap="armor study, red">
-    <img src="helmet.jpg" alt="Red helmet armor study">
-    <span class="idx">01</span>
-    <span class="tag">armor study — red</span>
+<div id="startMenu">
+  <div class="profile">
+    <div class="pic"><img src="profile.jpg" alt="profile"></div>
+    <div class="who">
+      <span class="name">golam akhand</span>
+      <span class="status">signed in</span>
+    </div>
   </div>
-  <div class="tile" id="t-bebop" data-full="bebop-still.jpg" data-cap="still, night drive">
-    <img src="bebop-still.jpg" alt="Night drive still">
-    <span class="idx">02</span>
-    <span class="tag">still — night drive</span>
-  </div>
-  <div class="tile contain" id="t-scribble" data-full="scribble.png" data-cap="sketch, red thread">
-    <img src="scribble.png" alt="Loose ink scribble">
-    <span class="idx">03</span>
-    <span class="tag">sketch — red thread</span>
-  </div>
-  <div class="tile contain" id="t-pill" data-full="pill-sticker.jpg" data-cap="sticker, good for health">
-    <img src="pill-sticker.jpg" alt="Pill sticker">
-    <span class="idx">04</span>
-    <span class="tag">sticker — pill</span>
-  </div>
-  <div class="tile contain" id="t-magpie" data-full="magpie.png" data-cap="specimen, in flight">
-    <img src="magpie.png" alt="Magpie cutout">
-    <span class="idx">05</span>
-    <span class="tag">specimen — magpie</span>
-  </div>
-  <div class="tile paper" id="t-stamp" data-full="bangladesh-stamp.jpg" data-cap="stamp, water lilies">
-    <img src="bangladesh-stamp.jpg" alt="Bangladesh stamp">
-    <span class="idx">06</span>
-    <span class="tag">stamp — water lily</span>
-  </div>
-  <div class="tile" id="t-ali" data-full="ali-flag.jpg" data-cap="archive photo, flag">
-    <img src="ali-flag.jpg" alt="Archive photo with flag">
-    <span class="idx">07</span>
-    <span class="tag">archive — flag</span>
-  </div>
-</main>
-
-<div class="lightbox" id="lightbox">
-  <span class="lb-close" id="lbClose">[ close ]</span>
-  <img id="lbImg" src="" alt="">
-  <span class="lb-cap" id="lbCap"></span>
+  <a href="mailto:GmAkhand@gmail.com">email</a>
+  <a href="https://www.instagram.com/2ui_tara" target="_blank">instagram</a>
+  <div class="mi" data-win="work">work/</div>
+  <div class="mi" data-win="about">about.txt</div>
 </div>
 
-<footer>
-  <span>&copy; Golam Akhand 2026</span>
-  <span>Queens, NY</span>
-</footer>
+<div id="taskbar">
+  <button id="startBtn">
+    <svg class="eye" viewBox="0 0 64 40"><path class="lid" d="M2,20 Q32,-4 62,20 Q32,44 2,20 Z"/><circle class="pupil" cx="32" cy="20" r="7"/></svg>
+    golam akhand
+  </button>
+  <div id="taskWindows"></div>
+  <div id="clock">--:--</div>
+</div>
 
 <script>
-/* eye tracks cursor within its socket */
-const eyeSvg = document.getElementById('eyeSvg');
-const pupilGroup = document.getElementById('pupilGroup');
-function moveEye(clientX, clientY){
-  const rect = eyeSvg.getBoundingClientRect();
-  const cx = rect.left + rect.width/2;
-  const cy = rect.top + rect.height/2;
-  const dx = clientX - cx;
-  const dy = clientY - cy;
-  const angle = Math.atan2(dy, dx);
-  const dist = Math.min(7, Math.hypot(dx,dy)/40);
-  const px = Math.cos(angle) * dist;
-  const py = Math.sin(angle) * dist * 0.5;
-  pupilGroup.setAttribute('transform', `translate(${px.toFixed(2)},${py.toFixed(2)})`);
-}
-window.addEventListener('pointermove', (e)=> moveEye(e.clientX, e.clientY));
+const windows = document.querySelectorAll('.win');
+const icons = document.querySelectorAll('.icon');
+const taskWindows = document.getElementById('taskWindows');
+let z = 10;
 
-/* subtle cursor dot */
-const dot = document.getElementById('cursorDot');
-window.addEventListener('pointermove', (e)=>{
-  dot.style.left = e.clientX + 'px';
-  dot.style.top = e.clientY + 'px';
+function bringFront(win){
+  z += 1;
+  win.style.zIndex = z;
+}
+
+function chipFor(id){
+  return taskWindows.querySelector(`[data-chip="${id}"]`);
+}
+
+function openWindow(id){
+  const win = document.getElementById('win-' + id);
+  if(!win) return;
+  const wasOpen = win.classList.contains('open');
+  win.classList.add('open');
+  bringFront(win);
+  if(!wasOpen){
+    const chip = document.createElement('div');
+    chip.className = 'task-chip active';
+    chip.textContent = id;
+    chip.dataset.chip = id;
+    chip.addEventListener('click', ()=>{
+      if(win.classList.contains('open') && Number(win.style.zIndex) === z){
+        win.classList.remove('open');
+        chip.classList.remove('active');
+      } else {
+        win.classList.add('open');
+        bringFront(win);
+        document.querySelectorAll('.task-chip').forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+      }
+    });
+    taskWindows.appendChild(chip);
+  } else {
+    document.querySelectorAll('.task-chip').forEach(c=>c.classList.remove('active'));
+    const chip = chipFor(id);
+    if(chip) chip.classList.add('active');
+  }
+}
+
+function closeWindow(id){
+  const win = document.getElementById('win-' + id);
+  if(win) win.classList.remove('open');
+  const chip = chipFor(id);
+  if(chip) chip.remove();
+}
+
+/* icon double-click / double-tap opens its window */
+icons.forEach(icon=>{
+  let lastTap = 0;
+  const trigger = ()=>{
+    icons.forEach(i=>i.classList.remove('selected'));
+    icon.classList.add('selected');
+    openWindow(icon.dataset.win);
+  };
+  icon.addEventListener('dblclick', trigger);
+  icon.addEventListener('touchend', ()=>{
+    const now = Date.now();
+    if(now - lastTap < 320) trigger();
+    lastTap = now;
+  });
+  icon.addEventListener('click', ()=>{
+    icons.forEach(i=>i.classList.remove('selected'));
+    icon.classList.add('selected');
+  });
 });
 
-/* lightbox */
+/* start menu items open windows too */
+document.querySelectorAll('#startMenu .mi').forEach(mi=>{
+  mi.addEventListener('click', ()=> openWindow(mi.dataset.win));
+});
+
+/* window buttons */
+windows.forEach(win=>{
+  win.addEventListener('mousedown', ()=> bringFront(win));
+  const id = win.id.replace('win-','');
+  const closeBtn = win.querySelector('[data-close]');
+  if(closeBtn) closeBtn.addEventListener('click', ()=> closeWindow(id));
+  const minBtn = win.querySelector('[data-min]');
+  if(minBtn) minBtn.addEventListener('click', ()=>{
+    win.classList.remove('open');
+    const chip = chipFor(id);
+    if(chip) chip.classList.remove('active');
+  });
+});
+
+/* draggable icons + windows (pointer-based, works mouse + touch) */
+function makeDraggable(el, handle, container){
+  handle = handle || el;
+  let ox=0, oy=0, dragging=false;
+  handle.addEventListener('pointerdown', (e)=>{
+    dragging = true;
+    handle.setPointerCapture(e.pointerId);
+    const rect = el.getBoundingClientRect();
+    ox = e.clientX - rect.left;
+    oy = e.clientY - rect.top;
+    if(container) bringFront(el);
+    el.style.right = 'auto';
+    el.style.bottom = 'auto';
+  });
+  handle.addEventListener('pointermove', (e)=>{
+    if(!dragging) return;
+    el.style.left = (e.clientX - ox) + 'px';
+    el.style.top = (e.clientY - oy) + 'px';
+  });
+  handle.addEventListener('pointerup', (e)=>{
+    dragging = false;
+    try{ handle.releasePointerCapture(e.pointerId); }catch(err){}
+  });
+}
+icons.forEach(icon=> makeDraggable(icon));
+windows.forEach(win=> makeDraggable(win, win.querySelector('.win-bar'), true));
+
+/* boot notice */
+const notice = document.getElementById('notice');
+setTimeout(()=> notice.classList.add('open'), 500);
+document.getElementById('noticeOk').addEventListener('click', ()=> notice.classList.remove('open'));
+notice.querySelector('[data-close]').addEventListener('click', ()=> notice.classList.remove('open'));
+makeDraggable(notice, notice.querySelector('.win-bar'));
+
+/* start menu toggle */
+const startBtn = document.getElementById('startBtn');
+const startMenu = document.getElementById('startMenu');
+startBtn.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  startMenu.classList.toggle('open');
+});
+document.addEventListener('click', ()=> startMenu.classList.remove('open'));
+
+/* work thumbnail lightbox */
 const lightbox = document.getElementById('lightbox');
 const lbImg = document.getElementById('lbImg');
 const lbCap = document.getElementById('lbCap');
-document.querySelectorAll('.tile').forEach(tile=>{
-  tile.addEventListener('click', ()=>{
-    lbImg.src = tile.dataset.full;
-    lbCap.textContent = tile.dataset.cap || '';
+document.querySelectorAll('.wthumb').forEach(thumb=>{
+  thumb.addEventListener('click', ()=>{
+    lbImg.src = thumb.dataset.full;
+    lbCap.textContent = thumb.dataset.cap || '';
     lightbox.classList.add('open');
   });
 });
@@ -282,6 +544,16 @@ function closeLightbox(){ lightbox.classList.remove('open'); lbImg.src=''; }
 document.getElementById('lbClose').addEventListener('click', closeLightbox);
 lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
 window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
+
+/* clock */
+function tick(){
+  const d = new Date();
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  document.getElementById('clock').textContent = `${hh}:${mm}`;
+}
+tick();
+setInterval(tick, 1000*15);
 </script>
 
 </body>
